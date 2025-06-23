@@ -3,7 +3,19 @@ import './HomeScreen.scss';
 import FilterComponent from '../components/homecomponents/FilterComponent';
 import HomeBanner from '../components/homecomponents/HomeBanner';
 import RestaurantCard from '../components/homecomponents/RestaurantCard';
+
+import { useEffect, useState } from 'react';
+import { getAllRestaurant } from '../services/api';
+import { IRestaurant } from '../interfaces/restaurant';
 const HomeScreen: React.FC =() => {
+  const[allRestaurant,setAllRestaurant]=useState<IRestaurant[]>()
+  useEffect(()=>{
+    void getAllRestaurant().then((response)=>{
+      setAllRestaurant(response)
+
+    },)
+
+  },[])
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -15,7 +27,12 @@ const HomeScreen: React.FC =() => {
             <div className="banner_section">
             <HomeBanner/></div>
             <div className="restaurant_section">
-              <RestaurantCard/>
+              {allRestaurant && allRestaurant.map((restaurant,restaurantIndex)=>{
+                return(
+                  <div key={restaurantIndex}><RestaurantCard restaurantData={restaurant}/></div>
+                )
+              })}
+              
             </div>
             
           </div>
