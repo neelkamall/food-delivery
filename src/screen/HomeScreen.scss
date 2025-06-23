@@ -7,9 +7,13 @@
     }
     .body_section{
         height: calc(100% - 150px);
-        background-color: aqua;
+        background-color: whitesmoke;
         border-top-left-radius:25px;
         border-top-right-radius: 25px;
         padding: 15px;
+        .restaurant_section{
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
     }
 }
