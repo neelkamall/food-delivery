@@ -1,20 +1,44 @@
 import React from 'react'
 import "./MenuCard.scss"
-
-const MenuCard:React.FC = () => {
+import { IMenuItems } from '../../interfaces/restaurant'
+interface ItemsCardProps{
+    itemData:IMenuItems,
+    addItem:(data : IMenuItems) => void
+    isIncluded : boolean
+    removeItem:(data : string)=>void;
+}
+const MenuCard:React.FC<ItemsCardProps> = ({itemData,addItem,isIncluded,removeItem}) => {
   return (
-    <div>
-        <div className='menu_card'>
-            <div className="image_section">
-                <img src="" alt="" />
+    <div className='menu_card'>
+        <div className="image_section">
+            <img src={itemData.image}/>
+        </div>
+        
+        <div className="content_section">
+            <div className="title">
+                {itemData.name}
             </div>
-            <div className="content_section">
-                <div className="title">Lorem, ipsum dolor.</div>
-                <div className="description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi, itaque.</div>
-                <div className="button">Add Item</div>
+            <div className="description">
+                {itemData.description}
+            </div>
+            <div className="price_detail">
+                <div className="price">
+                    ₹ {itemData.price}
+                </div>
+                {isIncluded ? (
+                     <div className="button" onClick={()=>{
+                    removeItem(itemData._id);}}>
+                    Remove
+                </div>
+                ) : (
+                    <div className="button" onClick={()=>{
+                    addItem(itemData);}}>
+                    Add Item
+                </div>
+                 )}     
             </div>
         </div>
-      
+
     </div>
   )
 }
