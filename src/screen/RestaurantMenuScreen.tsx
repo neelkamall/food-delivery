@@ -42,10 +42,15 @@ const RestaurantMenuScreen: React.FC = () => {
     // } else {
     //   setRestaurantCart(null);
     // }
-    if (cartString && cartString !== "undefined" && cartString !== "null") {
+     if (cartString && cartString !== "undefined" && cartString !== "null") {
       try {
         const cartData: ICart = JSON.parse(cartString);
-        setRestaurantCart(cartData);
+
+        if (cartData.restaurantId === restaurantId) {
+          setRestaurantCart(cartData);
+        } else {
+          setRestaurantCart(null);
+        }
       } catch (error) {
         console.error("Invalid cart data in localStorage:", error);
         setRestaurantCart(null);
@@ -62,6 +67,7 @@ const RestaurantMenuScreen: React.FC = () => {
     if (restaurantCart !== undefined && restaurantCart !== null) {
       newCart = { ...restaurantCart, items: [...restaurantCart.items] };
     } else {
+      localStorage.removeItem("restaurantCart");
       newCart = {
         restaurantId: restaurantId,
         items: [],

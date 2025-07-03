@@ -31,9 +31,15 @@ const CartScreen: React.FC = () => {
           });
       } catch (error) {
         console.error("Invalid cart data in localStorage:", error);
+         history.goBack();
       }
+    } else {
+      history.goBack();
     }
   }, [location.key]);
+      
+    
+  
 
   const handleIncrementOrDecrement = (itemIndex: number, method: string) => {
     if (!restaurantCart) {
